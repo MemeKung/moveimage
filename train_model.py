@@ -62,6 +62,22 @@ def remove_unreadable_images(data_dir):
                 os.remove(filepath)
     print(f"[✅] ตรวจเสร็จ ลบไป {len(unreadable_files)} ไฟล์")
 
+# ✅ ระบบแคชเพื่อตรวจว่าไฟล์เปลี่ยนหรือไม่
+# ---------------------------------------
+def calculate_md5(filepath):
+    with open(filepath, "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()
+
+def load_processed_cache(cache_path="processed_images.json"):
+    if os.path.exists(cache_path):
+        with open(cache_path, "r") as f:
+            return json.load(f)
+    return {}
+
+def save_processed_cache(data, cache_path="processed_images.json"):
+    with open(cache_path, "w") as f:
+        json.dump(data, f, indent=2)
+        
 # ---------------------------------------
 # 1) ฟังก์ชันฝึกโมเดล
 # ---------------------------------------
